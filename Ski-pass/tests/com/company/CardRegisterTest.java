@@ -74,13 +74,23 @@ class CardRegisterTest {
     }
 
     @Test
+    void CheckingActivatedCardState() {
+        CardRegister register = new CardRegister();
+        int identifier = register.RegisterNewCard(PassCard.CardType.STANDARD, PassCard.CardKind.BY_TRIPS, 6);
+        register.DeactivateCard(identifier);
+        register.ActivateCard(identifier);
+
+        assertTrue(register.RegisteredCard.get(identifier).IsActive);
+    }
+
+    @Test
     void ChangingTripsLeftNumber() {
         CardRegister register = new CardRegister();
         int numberOfTripsBeforeSet = 3;
         int identifier = register.RegisterNewCard(PassCard.CardType.SPECIAL, PassCard.CardKind.BY_TRIPS, numberOfTripsBeforeSet);
         int numberOfTripsToSet = 10;
         register.RegisteredCard.get(identifier).AddTrips(numberOfTripsToSet);
-        
+
         assertEquals(register.RegisteredCard.get(identifier).TripsNumberLeft, numberOfTripsToSet + numberOfTripsBeforeSet);
     }
 }
