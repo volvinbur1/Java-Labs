@@ -25,12 +25,12 @@ public class PassCard {
         Kind = kind;
 
         DaysLeft = -1;
-        TripsNumberLeft = -1;
+        TripsNumberLeft = numberOfTripsOrDays;
 
-        if (kind == CardKind.BY_TRIPS)
-            TripsNumberLeft = numberOfTripsOrDays;
-        if (kind == CardKind.BY_DAYS_LEFT)
+        if (kind == CardKind.BY_DAYS_LEFT) {
             DaysLeft = numberOfTripsOrDays;
+            TripsNumberLeft = -1;
+        }
 
         Validity = validity;
     }

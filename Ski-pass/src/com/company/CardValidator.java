@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class CardValidator {
-    //TODO pass CardRegister class object as a reference
     public static boolean Validate(int identifier, CardRegister cardRegisterObject) {
         if (cardRegisterObject == null || identifier < 0)
             return false;
@@ -19,28 +18,44 @@ public class CardValidator {
         if (!passCard.IsActive)
             return false;
 
-        int hourNow = LocalTime.now().getHour();
-
-        if (passCard.Kind == PassCard.CardKind.DAILY && hourNow < 9 && hourNow > 14)
-            return false;
-
-        if (passCard.Kind == PassCard.CardKind.EVENING && hourNow < 14 && hourNow > 19)
-            return false;
-
-        if (passCard.Kind == PassCard.CardKind.DAILY && hourNow < 19)
-            return false;
-
         if (passCard.DaysLeft == 0)
             return false;
+
+        int hourNow = LocalTime.now().getHour();
+
+        if (passCard.Kind == PassCard.CardKind.DAILY && hourNow >= 9 && hourNow < 14) {
+            if (passCard.TripsNumberLeft == 0)
+                return false;
+            passCard.TripsNumberLeft--;
+            cardRegisterObject.RegisteredCard.put(identifier, passCard);
+            return true;
+        }
+
+        if (passCard.Kind == PassCard.CardKind.EVENING && hourNow >= 14 && hourNow < 19) {
+            if (passCard.TripsNumberLeft == 0)
+                return false;
+            passCard.TripsNumberLeft--;
+            cardRegisterObject.RegisteredCard.put(identifier, passCard);
+            return true;
+        }
+
+        if (passCard.Kind == PassCard.CardKind.NIGHTLY && hourNow >= 19) {
+            if (passCard.TripsNumberLeft == 0)
+                return false;
+            passCard.TripsNumberLeft--;
+            cardRegisterObject.RegisteredCard.put(identifier, passCard);
+            return true;
+        }
 
         if (passCard.Kind == PassCard.CardKind.BY_TRIPS) {
             if (passCard.TripsNumberLeft == -1)
                 return false;
             passCard.TripsNumberLeft--;
             cardRegisterObject.RegisteredCard.put(identifier, passCard);
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     public static void DayRunOut(CardRegister cardRegisterObject) {

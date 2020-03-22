@@ -1,14 +1,18 @@
 package com.company;
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class CardRegister {
-    public Map<Integer, PassCard> RegisteredCard;
+    public Map<Integer, PassCard> RegisteredCard = new HashMap<>();
 
-    public int RegisterNewCard(PassCard.CardType type, PassCard.CardKind kind, int trips, LocalDate expiredAt) {
+    public int RegisterNewCard(PassCard.CardType type, PassCard.CardKind kind, int trips) {
         int identifier;
-        identifier = RegisteredCard.size();
+        identifier = RegisteredCard.size() + 1;
+        LocalDate expiredAt = LocalDate.now();
         PassCard card = new PassCard(identifier, type, kind, trips, expiredAt);
         RegisteredCard.put(identifier, card);
         return identifier;
