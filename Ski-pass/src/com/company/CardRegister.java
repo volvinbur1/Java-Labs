@@ -1,10 +1,8 @@
 package com.company;
 
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class CardRegister {
     public Map<Integer, PassCard> RegisteredCard = new HashMap<>();
