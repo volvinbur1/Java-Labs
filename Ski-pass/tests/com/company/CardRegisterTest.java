@@ -39,4 +39,13 @@ class CardRegisterTest {
         boolean passed = CardValidator.Validate(identifier, register);
         assertFalse(passed);
     }
+
+    @Test
+    void NOTPassingDeactivatedCard() {
+        CardRegister register = new CardRegister();
+        int identifier = register.RegisterNewCard(PassCard.CardType.STANDARD, PassCard.CardKind.BY_TRIPS, 6);
+        register.DeactivateCard(identifier);
+        boolean passed = CardValidator.Validate(identifier, register);
+        assertFalse(passed);
+    }
 }
