@@ -11,8 +11,8 @@ class CardRegisterTest {
         CardRegister register = new CardRegister();
         //results depends on the current time of day
         int identifier = register.RegisterNewCard(PassCard.CardType.STANDARD, PassCard.CardKind.NIGHTLY, 6);
-        boolean passed = CardValidator.Validate(identifier, register);
-        assertTrue(passed);
+        CardValidator.ValidationResult passed = CardValidator.Validate(identifier, register);
+        assertEquals(passed, CardValidator.ValidationResult.VALIDATED);
     }
 
     @Test
@@ -20,24 +20,24 @@ class CardRegisterTest {
         CardRegister register = new CardRegister();
         //results depends on the current time of day
         int identifier = register.RegisterNewCard(PassCard.CardType.STANDARD, PassCard.CardKind.NIGHTLY, 0);
-        boolean passed = CardValidator.Validate(identifier, register);
-        assertFalse(passed);
+        CardValidator.ValidationResult passed = CardValidator.Validate(identifier, register);
+        assertNotEquals(passed, CardValidator.ValidationResult.VALIDATED);
     }
 
     @Test
     void PassingByCardWith_BY_TRIPS_Kind() {
         CardRegister register = new CardRegister();
         int identifier = register.RegisterNewCard(PassCard.CardType.STANDARD, PassCard.CardKind.BY_TRIPS, 3);
-        boolean passed = CardValidator.Validate(identifier, register);
-        assertTrue(passed);
+        CardValidator.ValidationResult passed = CardValidator.Validate(identifier, register);
+        assertEquals(passed, CardValidator.ValidationResult.VALIDATED);
     }
 
     @Test
     void NOTPassingByCardWith_BY_TRIPS_Kind() {
         CardRegister register = new CardRegister();
         int identifier = register.RegisterNewCard(PassCard.CardType.STANDARD, PassCard.CardKind.BY_TRIPS, 0);
-        boolean passed = CardValidator.Validate(identifier, register);
-        assertFalse(passed);
+        CardValidator.ValidationResult passed = CardValidator.Validate(identifier, register);
+        assertNotEquals(passed, CardValidator.ValidationResult.VALIDATED);
     }
 
     @Test
@@ -45,7 +45,25 @@ class CardRegisterTest {
         CardRegister register = new CardRegister();
         int identifier = register.RegisterNewCard(PassCard.CardType.STANDARD, PassCard.CardKind.BY_TRIPS, 6);
         register.DeactivateCard(identifier);
-        boolean passed = CardValidator.Validate(identifier, register);
-        assertFalse(passed);
+        CardValidator.ValidationResult passed = CardValidator.Validate(identifier, register);
+        assertNotEquals(passed, CardValidator.ValidationResult.VALIDATED);
+    }
+
+    @Test
+    void PassingByCardWithTimeOfDayKind_For_SPECIAL_Type() {
+        CardRegister register = new CardRegister();
+        //results depends on the current time of day
+        int identifier = register.RegisterNewCard(PassCard.CardType.SPECIAL, PassCard.CardKind.NIGHTLY, 6);
+        CardValidator.ValidationResult passed = CardValidator.Validate(identifier, register);
+        assertEquals(passed, CardValidator.ValidationResult.VALIDATED_SPECIAL);
+    }
+
+
+    @Test
+    void PassingByCardWith_BY_TRIPS_Kind_For_SPECIAL_Type() {
+        CardRegister register = new CardRegister();
+        int identifier = register.RegisterNewCard(PassCard.CardType.SPECIAL, PassCard.CardKind.BY_TRIPS, 3);
+        CardValidator.ValidationResult passed = CardValidator.Validate(identifier, register);
+        assertEquals(passed, CardValidator.ValidationResult.VALIDATED_SPECIAL);
     }
 }

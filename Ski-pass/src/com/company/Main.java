@@ -12,8 +12,9 @@ public class Main {
 
         for (int i = 0; i < 5; i++) {
             register.RegisteredCard.forEach((k, v) -> {
-                boolean passed = CardValidator.Validate(k, register);
-                if (passed) System.out.println("Card " + k + " is validated.");
+                CardValidator.ValidationResult passed = CardValidator.Validate(k, register);
+                if (passed ==  CardValidator.ValidationResult.VALIDATED) System.out.println("Card " + k + " is validated.");
+                else if (passed ==  CardValidator.ValidationResult.VALIDATED_SPECIAL) System.out.println("Card " + k + " is validated but documents should be checked");
                 else System.out.println("Card " + k + " is not validated.");
             });
         }
