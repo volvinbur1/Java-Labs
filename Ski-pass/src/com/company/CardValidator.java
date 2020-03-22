@@ -48,7 +48,7 @@ public class CardValidator {
         }
 
         if (passCard.Kind == PassCard.CardKind.BY_TRIPS) {
-            if (passCard.TripsNumberLeft == -1)
+            if (passCard.TripsNumberLeft == 0)
                 return false;
             passCard.TripsNumberLeft--;
             cardRegisterObject.RegisteredCard.put(identifier, passCard);

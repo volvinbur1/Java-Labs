@@ -23,4 +23,20 @@ class CardRegisterTest {
         boolean passed = CardValidator.Validate(identifier, register);
         assertFalse(passed);
     }
+
+    @Test
+    void PassingByCardWith_BY_TRIPS_Kind() {
+        CardRegister register = new CardRegister();
+        int identifier = register.RegisterNewCard(PassCard.CardType.STANDARD, PassCard.CardKind.BY_TRIPS, 3);
+        boolean passed = CardValidator.Validate(identifier, register);
+        assertTrue(passed);
+    }
+
+    @Test
+    void NOTPassingByCardWith_BY_TRIPS_Kind() {
+        CardRegister register = new CardRegister();
+        int identifier = register.RegisterNewCard(PassCard.CardType.STANDARD, PassCard.CardKind.BY_TRIPS, 0);
+        boolean passed = CardValidator.Validate(identifier, register);
+        assertFalse(passed);
+    }
 }
