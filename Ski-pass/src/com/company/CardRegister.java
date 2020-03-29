@@ -7,29 +7,34 @@ import java.util.Map;
 public class CardRegister {
     public Map<Integer, PassCard> RegisteredCard = new HashMap<>();
 
-    public int RegisterNewCard(PassCard.CardType type, PassCard.CardKind kind, int trips) {
-        int identifier;
-        identifier = RegisteredCard.size() + 1;
-        LocalDate expiredAt = LocalDate.now();
-        PassCard card = new PassCard(identifier, type, kind, trips, expiredAt);
+    public int RegisterValidityCard(PassCard.CardType type, ValidityCard.CardValidityType validityType, int availableDays) {
+        if (availableDays <= 0)
+            return -1;
+        int identifier = RegisteredCard.size() + 1;
+        PassCard card = new ValidityCard(identifier, type, validityType, availableDays);
+        RegisteredCard.put(identifier, card);
+        return identifier;
+    }
+
+    public int RegisterTripsNumberCard(PassCard.CardType type, int availableTripsNumber) {
+        if (availableTripsNumber <= 0)
+            return -1;
+        int identifier = RegisteredCard.size() + 1;
+        PassCard card = new TripsNumberCard(identifier, type, availableTripsNumber);
         RegisteredCard.put(identifier, card);
         return identifier;
     }
 
     public void DeactivateCard(int identifier) {
         PassCard object = RegisteredCard.get(identifier);
-        if (object != null) {
-            object.IsActive = false;
-            RegisteredCard.put(identifier, object);
-        }
+        if (object != null)
+            object.DeactivateCard();
     }
 
     public void ActivateCard(int identifier) {
         PassCard object = RegisteredCard.get(identifier);
-        if (object != null) {
-            object.IsActive = true;
-            RegisteredCard.put(identifier, object);
-        }
+        if (object != null)
+            object.ActivateCard();
     }
 
     public void PrintCardInfo(int identifier) {
