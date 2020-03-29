@@ -1,4 +1,4 @@
 package vehicle;
 
-public class PoliceCars extends Vehicles {
+public class PoliceCars extends Cars {
 }

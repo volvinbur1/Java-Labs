@@ -1,4 +1,4 @@
 package vehicle;
 
-public class FireTrucks extends Vehicles {
+public class FireTrucks extends Cars {
 }

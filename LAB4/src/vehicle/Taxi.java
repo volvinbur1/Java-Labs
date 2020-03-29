@@ -1,4 +1,4 @@
 package vehicle;
 
-public class Taxi extends Vehicles {
+public class Taxi extends Cars {
 }
