@@ -1,21 +1,21 @@
 package com.company;
 
 public class TripsNumberCard extends PassCard {
-    private int leftTrips;
+    public int leftTrips;
     public TripsNumberCard(int identifier, CardType type, int leftTrips) {
         super(identifier, type);
         this.leftTrips = leftTrips;
     }
 
-    public ValidationResult Validate() {
-        if (isActive && leftTrips > 0) {
-            leftTrips--;
-            if (type == CardType.SPECIAL)
-                return ValidationResult.VALIDATED_SPECIAL;
-            return ValidationResult.VALIDATED;
-        }
-        return ValidationResult.NOT_VALIDATED;
-    }
+//    public ValidationResult Validate() {
+//        if (isActive && leftTrips > 0) {
+//            leftTrips--;
+//            if (type == CardType.SPECIAL)
+//                return ValidationResult.VALIDATED_SPECIAL;
+//            return ValidationResult.VALIDATED;
+//        }
+//        return ValidationResult.NOT_VALIDATED;
+//    }
 
     @Override
     public String toString() {
