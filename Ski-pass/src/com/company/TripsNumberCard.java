@@ -7,15 +7,15 @@ public class TripsNumberCard extends PassCard {
         this.leftTrips = leftTrips;
     }
 
-//    public ValidationResult Validate() {
-//        if (isActive && leftTrips > 0) {
-//            leftTrips--;
-//            if (type == CardType.SPECIAL)
-//                return ValidationResult.VALIDATED_SPECIAL;
-//            return ValidationResult.VALIDATED;
-//        }
-//        return ValidationResult.NOT_VALIDATED;
-//    }
+    public ValidationResult Validate() {
+        if (isActive && leftTrips > 0) {
+            leftTrips--;
+            if (type == CardType.SPECIAL)
+                return ValidationResult.VALIDATED_SPECIAL;
+            return ValidationResult.VALIDATED;
+        }
+        return ValidationResult.NOT_VALIDATED;
+    }
 
     @Override
     public String toString() {

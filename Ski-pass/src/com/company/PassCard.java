@@ -1,11 +1,11 @@
 package com.company;
 
 public class PassCard {
-//    enum ValidationResult {
-//        NOT_VALIDATED,
-//        VALIDATED,
-//        VALIDATED_SPECIAL // this one is used when pass card is validated for person from special group (etc. Students or retirees)
-//    }
+    enum ValidationResult {
+        NOT_VALIDATED,
+        VALIDATED,
+        VALIDATED_SPECIAL // this one is used when pass card is validated for person from special group (etc. Students or retirees)
+    }
 
     enum CardType {
         STANDARD, SPECIAL, VIP
@@ -21,14 +21,14 @@ public class PassCard {
         this.type = type;
     }
 
-//    public ValidationResult Validate() {
-//        if (isActive) {
-//            if (type == CardType.SPECIAL)
-//                return ValidationResult.VALIDATED_SPECIAL;
-//            return ValidationResult.VALIDATED;
-//        }
-//        return ValidationResult.NOT_VALIDATED;
-//    }
+    public ValidationResult Validate() {
+        if (isActive) {
+            if (type == CardType.SPECIAL)
+                return ValidationResult.VALIDATED_SPECIAL;
+            return ValidationResult.VALIDATED;
+        }
+        return ValidationResult.NOT_VALIDATED;
+    }
 
     public void ActivateCard() {
         isActive = true;

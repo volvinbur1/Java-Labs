@@ -1,57 +1,45 @@
 package com.company;
 
-import java.time.LocalTime;
+import java.util.HashMap;
+import java.util.Map;
+
+class ValidationStatistic {
+    ValidationStatistic(PassCard card) {CardObject = card;}
+    public PassCard CardObject;
+    public int PassAllowedNumber = 0;
+    public int PassCanceledNumber = 0;
+}
 
 public class CardValidator {
-    enum ValidationResult {
-        NOT_VALIDATED,
-        VALIDATED,
-        VALIDATED_SPECIAL // this one is used when pass card is validated for person from special group (etc. Students or retirees)
-    }
+    public static Map<Integer, ValidationStatistic> Statistics = new HashMap<>();
 
-    public static ValidationResult Validate(PassCard passCard) {
+    public static boolean Validate(PassCard passCard) {
         if (passCard == null)
-            return ValidationResult.NOT_VALIDATED;
+            return false;
 
-        if (!passCard.isActive)
-            return ValidationResult.NOT_VALIDATED;
-        if (passCard instanceof ValidityCard)
-            return validateValidityCard((ValidityCard) passCard);
-        if (passCard instanceof TripsNumberCard)
-            return validateTripsNumberCard((TripsNumberCard) passCard);
-        return ValidationResult.NOT_VALIDATED;
-    }
-
-    public static ValidationResult validateTripsNumberCard(TripsNumberCard passCard) {
-        if (passCard.isActive && passCard.leftTrips > 0) {
-            passCard.leftTrips--;
-            if (passCard.type == PassCard.CardType.SPECIAL)
-                return ValidationResult.VALIDATED_SPECIAL;
-            return ValidationResult.VALIDATED;
-        }
-        return ValidationResult.NOT_VALIDATED;
-    }
-
-    private static ValidationResult validateValidityCard(ValidityCard passCard) {
-        int hourNow = LocalTime.now().getHour();
-        if (passCard.validityType == ValidityCard.CardValidityType.EVENING && hourNow >= 14 && hourNow < 19) {
-            if (verifyLeftDays(passCard)) {
-                if (passCard.type == PassCard.CardType.SPECIAL)
-                    return ValidationResult.VALIDATED_SPECIAL;
-                return ValidationResult.VALIDATED;
-            }
+        ValidationStatistic statForCard;
+        if (Statistics.containsKey(passCard.identifier))
+            statForCard = Statistics.get(passCard.identifier);
+        else {
+            statForCard = new ValidationStatistic(passCard);
+            Statistics.put(passCard.identifier, statForCard);
         }
 
-        if (passCard.validityType == ValidityCard.CardValidityType.NIGHTLY && hourNow >= 19) {
-            if (verifyLeftDays(passCard)) {
-                if (passCard.type == PassCard.CardType.SPECIAL)
-                    return ValidationResult.VALIDATED_SPECIAL;
-                return ValidationResult.VALIDATED;
-            }
+        PassCard.ValidationResult cardValidation = passCard.Validate();
+        if (cardValidation == PassCard.ValidationResult.NOT_VALIDATED) {
+            statForCard.PassCanceledNumber++;
+            return false;
         }
-        return ValidationResult.NOT_VALIDATED;
+        if (cardValidation == PassCard.ValidationResult.VALIDATED_SPECIAL)
+            SpecialGroupAlert();
+
+        statForCard.PassAllowedNumber++;
+        return true;
     }
 
+    private static void SpecialGroupAlert() {
+        System.out.println("Check document. Card from special group was detected.");
+    }
     private static boolean verifyLeftDays(ValidityCard passCard) {
         if (passCard.leftDays > 0) {
             passCard.leftDays--;
