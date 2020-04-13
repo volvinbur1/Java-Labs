@@ -1,6 +1,11 @@
 package vehicle;
 
+import humans.Humans;
+
 public class Cars extends Vehicles {
-    public int TrunkVolume;
-    public String CarBodyType;
+    public int trunkVolume;
+    public Cars (String carBrand, String stateVehicleNumber, int seatingAvailable, int trunkVolume) {
+        super(carBrand, stateVehicleNumber, seatingAvailable);
+        this.trunkVolume = trunkVolume;
+    }
 }
