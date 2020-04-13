@@ -1,6 +1,7 @@
 package humans;
 
 public class Policemen extends Humans {
-    public String Rank;
     public String Department;
+    public String Rank;
+    public int BadgeNumber;
 }
