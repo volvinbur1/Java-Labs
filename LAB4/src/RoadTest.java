@@ -98,4 +98,58 @@ class RoadTest {
         }
         assertEquals(1, policeCar.getSeatingOccupied());
     }
+
+    @Test
+    void GetHumansOnRoad() {
+        PoliceCars policeCar = new PoliceCars("Ford", "1234", 2,
+                60, "Department", "patrol");
+        Buses bus = new Buses("MAN", "AB4674DB", 10,
+                "Siti", 40);
+        try {
+            Policemen policeman1 = new Policemen("name1", "surname1", "middleName1", 40,
+                    "Department1", "major1", 15481);
+            Policemen policeman2 = new Policemen("name2", "surname2", "middleName2", 40,
+                    "Department2", "major2", 15482);
+            policeCar.NewPassenger(policeman1);
+            policeCar.NewPassenger(policeman2);
+            for (int a = 0; a < 10; a++) {
+                Humans human = new Humans("name"+a, "surname"+a, "middleName" +a, 18+a);
+                bus.NewPassenger(human);
+            }
+        }
+        catch (Exception e) {
+            String error;
+        }
+        Road road = new Road();
+        road.AddVehicleOnRoad(policeCar);
+        road.AddVehicleOnRoad(bus);
+        assertEquals(12, road.GetAmountOnRoadHuman());
+    }
+
+    @Test
+    void GetVehiclesOnRoad() {
+        PoliceCars policeCar = new PoliceCars("Ford", "1234",
+                2, 60, "Department", "patrol");
+        Buses bus = new Buses("MAN", "AB4674DB", 10,
+                "Siti", 40);
+        try {
+            Policemen policeman1 = new Policemen("name1", "surname1", "middleName1", 40,
+                    "Department1", "major1", 15481);
+            Policemen policeman2 = new Policemen("name2", "surname2", "middleName2", 40,
+                    "Department2", "major2", 15482);
+            policeCar.NewPassenger(policeman1);
+            policeCar.NewPassenger(policeman2);
+            for (int a = 0; a < 10; a++) {
+                Humans human = new Humans("name"+a, "surname"+a, "middleName" +a, 18+a);
+                bus.NewPassenger(human);
+            }
+        }
+        catch (Exception e) {
+            String error;
+        }
+        Road road = new Road();
+        road.AddVehicleOnRoad(policeCar);
+        road.AddVehicleOnRoad(bus);
+        assertEquals(2, road.GetAmountOnRoadVehicle());
+    }
 }
