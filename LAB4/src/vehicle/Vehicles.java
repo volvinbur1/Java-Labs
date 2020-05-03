@@ -27,7 +27,7 @@ public class Vehicles {
         return SeatingOccupied;
     }
 
-    protected List<? extends Humans> passengerList = new ArrayList<>();
+    protected List<Humans> passengerList = new ArrayList<>();
 
     public <T extends Humans> void NewPassenger(T passenger) throws VehicleFull, HumanExisting {
         if (passenger == null)
