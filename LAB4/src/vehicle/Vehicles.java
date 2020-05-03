@@ -36,6 +36,7 @@ public class Vehicles {
             throw new VehicleFull("Passenger " + passenger.Surname + " can not be new. Vehicle full");
         if (passengerList.contains(passenger))
             throw new HumanExisting("Passenger " + passenger.Surname + " is already inside a vehicle");
+        passengerList.add(passenger);
         SeatingOccupied++;
     }
 
