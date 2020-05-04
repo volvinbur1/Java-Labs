@@ -19,7 +19,7 @@ public class CustomReader extends FilterReader {
                 strCreator = new StringBuilder();
                 continue;
             }
-            strCreator.append(ch);
+            strCreator.append((char) ch);
         }
         return resultList;
     }
@@ -34,7 +34,7 @@ public class CustomReader extends FilterReader {
                 strCreator = new StringBuilder();
                 continue;
             }
-            strCreator.append(ch - (int)keySymbol);
+            strCreator.append((char) ( ch - (int)keySymbol));
         }
         return resultList;
     }

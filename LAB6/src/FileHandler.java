@@ -33,8 +33,10 @@ public class FileHandler {
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
+            closeAllStreams();
             return false;
         }
+        closeAllStreams();
         return true;
     }
 
@@ -49,8 +51,26 @@ public class FileHandler {
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
+            closeAllStreams();
             return  false;
         }
+        closeAllStreams();
         return true;
+    }
+
+    private void closeAllStreams() {
+        try {
+            if (fReader != null)
+                fReader.close();
+            if (fWriter != null)
+                fWriter.close();
+            if (customWriter != null)
+                customWriter.close();
+            if (customReader != null)
+                customReader.close();
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
