@@ -7,6 +7,10 @@ public class CustomWriter extends FilterWriter {
         super(writer);
     }
 
+    public void write(String str) throws IOException {
+        super.write(str);
+    }
+
     public void write(String str, char keySymbol) throws IOException {
         char[] strByChar = str.toCharArray();
         for (char c : strByChar)

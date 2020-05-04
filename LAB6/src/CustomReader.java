@@ -24,11 +24,18 @@ public class CustomReader extends FilterReader {
         return resultList;
     }
 
-    public String read(char keySymbol) throws IOException {
-        StringBuilder resultingStr = new StringBuilder();
+    public List<String> readLines(char keySymbol) throws IOException {
+        StringBuilder strCreator = new StringBuilder();
+        List<String> resultList = new ArrayList<String>();
         int ch;
-        while ((ch = super.read()) != -1)
-            resultingStr.append(ch - (int) keySymbol);
-        return resultingStr.toString();
+        while ((ch = super.read()) != -1) {
+            if (ch == '\n') {
+                resultList.add(strCreator.toString());
+                strCreator = new StringBuilder();
+                continue;
+            }
+            strCreator.append(ch - (int)keySymbol);
+        }
+        return resultList;
     }
 }
