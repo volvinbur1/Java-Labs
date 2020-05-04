@@ -2,8 +2,8 @@ import java.io.FilterWriter;
 import java.io.IOException;
 import java.io.Writer;
 
-public class Encoder extends FilterWriter {
-    public Encoder (Writer writer) {
+public class CustomWriter extends FilterWriter {
+    public CustomWriter(Writer writer) {
         super(writer);
     }
 
