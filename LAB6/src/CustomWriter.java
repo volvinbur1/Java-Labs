@@ -15,6 +15,6 @@ public class CustomWriter extends FilterWriter {
         char[] strByChar = str.toCharArray();
         for (char c : strByChar)
             super.write((int) c + (int) keySymbol);
-        super.write('\n');
+        super.write("\n");
     }
 }

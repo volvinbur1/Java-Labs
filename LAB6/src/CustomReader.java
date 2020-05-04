@@ -14,7 +14,7 @@ public class CustomReader extends FilterReader {
         List<String> resultList = new ArrayList<String>();
         int ch;
         while ((ch = super.read()) != -1) {
-            if (ch == '\n') {
+            if (ch == '\n' && strCreator.length() != 0) {
                 resultList.add(strCreator.toString());
                 strCreator = new StringBuilder();
                 continue;
@@ -29,7 +29,7 @@ public class CustomReader extends FilterReader {
         List<String> resultList = new ArrayList<String>();
         int ch;
         while ((ch = super.read()) != -1) {
-            if (ch == '\n') {
+            if (ch == '\n' && strCreator.length() != 0) {
                 resultList.add(strCreator.toString());
                 strCreator = new StringBuilder();
                 continue;
