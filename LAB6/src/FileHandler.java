@@ -1,14 +1,56 @@
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.List;
+
 public class FileHandler {
     private char keyChar;
-    public FileHandler(char keyChar) {
+    private FileReader fReader = null;
+    private FileWriter fWriter = null;
+    private CustomWriter customWriter = null;
+    private CustomReader customReader = null;
+
+    public FileHandler(String inputFile, String outputFile, char keyChar) {
         this.keyChar = keyChar;
+        try {
+            fReader = new FileReader(inputFile);
+            this.customReader = new CustomReader(fReader);
+            fWriter = new FileWriter(outputFile);
+            customWriter = new CustomWriter(fWriter);
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
-    public String Encode(String inputFile) {
-        
+    public boolean Encode() {
+        if (customReader == null || customWriter == null)
+            return false;
+        try {
+            List<String> linesToEncode = customReader.readLines();
+            for (String line : linesToEncode) {
+                customWriter.write(line, keyChar);
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+        return true;
     }
 
-    public String Decode(String inputFile) {
-
+    public boolean Decode() {
+        if (customReader == null || customWriter == null)
+            return false;
+        try {
+            List<String> linesToDecode = customReader.readLines(keyChar);
+            for (String line : linesToDecode) {
+                customWriter.write(line);
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            return  false;
+        }
+        return true;
     }
 }
