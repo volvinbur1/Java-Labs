@@ -15,6 +15,10 @@ public class MonteCarloSimulation {
     private List<Executor> executors = new ArrayList<>();
     private List<Thread> threads = new ArrayList<>();
 
+    private long calculationTime = 0; // in nanoseconds
+    public final double GetCalculationTime() {
+        return calculationTime / Math.pow(10, 9);
+    }
     public final long GetIterations() {
         return globalIterations;
     }
@@ -23,6 +27,7 @@ public class MonteCarloSimulation {
     }
 
     public double CalculatePi() throws InterruptedException {
+        long startTime = System.nanoTime();
         for (int i = 0; i < threadsNumber; i++) {
             Executor executor = new Executor(globalIterations / threadsNumber);
             Thread thread = new Thread(executor);
@@ -40,7 +45,7 @@ public class MonteCarloSimulation {
             globalSuitablePoints += executor.GetSuitablePoints();
             globalIterations += executor.GetThreadIteration();
         }
-
+        calculationTime = System.nanoTime() - startTime;
         return (globalSuitablePoints * 1.0 / globalIterations) * 4;
     }
 

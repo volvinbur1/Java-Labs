@@ -1,8 +1,8 @@
 public class Main {
 
     public static void main(String[] args) {
-        long iterations = 10000000;
-        int threads = 20;
+        long iterations = 1000000000;
+        int threads = 8;
 	    MonteCarloSimulation pi = new MonteCarloSimulation(threads, iterations);
 	    double piValue = 0;
 	    try {
@@ -15,5 +15,6 @@ public class Main {
 	    System.out.println("Calculated pi value: " + piValue);
 	    System.out.println("Point inside a cycle quarter: " + pi.GetSuitablePoints());
 	    System.out.println("Done iterations: " + pi.GetIterations());
+	    System.out.println("Time spent on calculation: " + pi.GetCalculationTime());
     }
 }
