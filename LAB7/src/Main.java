@@ -1,8 +1,8 @@
 public class Main {
 
     public static void main(String[] args) {
-        long iterations = 1000000000;
-        int threads = 8;
+        long iterations = 1000000;
+        int threads = 20;
 	    MonteCarloSimulation pi = new MonteCarloSimulation(threads, iterations);
 	    double piValue = 0;
 	    try {
