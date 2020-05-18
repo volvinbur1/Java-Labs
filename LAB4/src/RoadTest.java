@@ -1,12 +1,11 @@
 import exceptions.HumanExisting;
 import exceptions.VehicleFull;
-import humans.Firefighters;
-import humans.Humans;
-import humans.Policemen;
+import humans.Firefighter;
+import humans.Human;
+import humans.Policeman;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.parallel.Execution;
-import vehicle.Buses;
-import vehicle.PoliceCars;
+import vehicle.Bus;
+import vehicle.PoliceCar;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,73 +13,73 @@ class RoadTest {
 
     @Test
     void PeoplesInBuss() throws VehicleFull, HumanExisting {
-        Buses bus = new Buses("MAN", "AB4674DB", 18, "Siti", 40);
+        Bus bus = new Bus("MAN", "AB4674DB", 18, "Siti", 40);
         for (int a = 0; a < 6; a++) {
-            Humans human = new Humans("name" + a, "surname"+a, "middleName" + a, 18 + a);
-            bus.NewPassenger(human);
+            Human human = new Human("name" + a, "surname"+a, "middleName" + a, 18 + a);
+            bus.addPassenger(human);
         }
         for (int a = 6; a < 12; a++) {
-            Policemen policeman = new Policemen("name" + a, "surname"+a, "middleName" + a, 18 + a,
+            Policeman policeman = new Policeman("name" + a, "surname"+a, "middleName" + a, 18 + a,
                     "department"+a, "major", 100+a);
-            bus.NewPassenger(policeman);
+            bus.addPassenger(policeman);
         }
         for (int a = 12; a < 18; a++) {
-            Firefighters human = new Firefighters("name" + a, "surname"+a, "middleName" + a, 18 + a,
+            Firefighter human = new Firefighter("name" + a, "surname"+a, "middleName" + a, 18 + a,
                     "department" + a, "major");
-            bus.NewPassenger(human);
+            bus.addPassenger(human);
         }
         assertEquals(18, bus.getSeatingOccupied());
     }
 
     @Test
     void AddToFullBuss() {
-        Buses bus = new Buses("MAN", "AB4674DB", 10, "Siti", 40);
+        Bus bus = new Bus("MAN", "AB4674DB", 10, "Siti", 40);
         assertThrows(VehicleFull.class, () -> {
             for (int a = 0; a < 20; a++) {
-                Humans human = new Humans("name" + a, "surname" + a, "middleName" + a, 18 + a);
-                bus.NewPassenger(human);
+                Human human = new Human("name" + a, "surname" + a, "middleName" + a, 18 + a);
+                bus.addPassenger(human);
             }
         });
     }
 
     @Test
     void AddingExistingPassenger() {
-        Buses bus = new Buses("MAN", "AB4674DB", 10, "Siti", 40);
-        Humans human = new Humans("name", "surname", "middleName", 18);
+        Bus bus = new Bus("MAN", "AB4674DB", 10, "Siti", 40);
+        Human human = new Human("name", "surname", "middleName", 18);
         assertThrows(HumanExisting.class, () -> {
-            bus.NewPassenger(human);
-            bus.NewPassenger(human);
+            bus.addPassenger(human);
+            bus.addPassenger(human);
         });
     }
 
     @Test
     void policeManInPoliceCar() throws VehicleFull, HumanExisting {
-        PoliceCars policeCar = new PoliceCars("Ford", "1234", 2,
+        PoliceCar policeCar = new PoliceCar("Ford", "1234", 2,
                 60, "Department", "patrol");
-        Policemen policeman = new Policemen("name", "surname", "middleName", 40,
+        Policeman policeman = new Policeman("name", "surname", "middleName", 40,
                     "Department", "major", 15484);
-        Policemen policeman1 = new Policemen("name1", "surname1", "middleName", 40,
+        Policeman policeman1 = new Policeman("name1", "surname1", "middleName", 40,
                 "Department", "major", 15484);
-        policeCar.NewPassenger(policeman);
-        policeCar.NewPassenger(policeman1);
+        policeCar.addPassenger(policeman);
+        policeCar.addPassenger(policeman1);
         assertEquals(2, policeCar.getSeatingOccupied());
     }
 
     @Test
-    void GetHumansOnRoad() throws VehicleFull, HumanExisting {
-        PoliceCars policeCar = new PoliceCars("Ford", "1234", 2,
+    void GetHumanOnRoad() throws VehicleFull, HumanExisting {
+        PoliceCar policeCar = new PoliceCar("Ford", "1234", 2,
                 60, "Department", "patrol");
-        Buses bus = new Buses("MAN", "AB4674DB", 10,
+        Bus bus = new Bus("MAN", "AB4674DB", 10,
                 "Siti", 40);
-        Policemen policeman1 = new Policemen("name1", "surname1", "middleName1", 40,
+        Policeman policeman1 = new Policeman("name1", "surname1", "middleName1", 40,
                 "Department1", "major1", 15481);
-        Policemen policeman2 = new Policemen("name2", "surname2", "middleName2", 40,
+        Policeman policeman2 = new Policeman("name2", "surname2", "middleName2", 40,
                 "Department2", "major2", 15482);
-        policeCar.NewPassenger(policeman1);
-        policeCar.NewPassenger(policeman2);
+        policeCar.addPassenger(policeman1);
+        policeCar.addPassenger(policeman2);
         for (int a = 0; a < 10; a++) {
-            Humans human = new Humans("name" + a, "surname" + a, "middleName" + a, 18 + a);
-            bus.NewPassenger(human);
+            Human human = new Human("name" + a, "surname" + a, "middleName" + a, 18 + a);
+            bus.addPassenger(human);
         }
 
         Road road = new Road();
@@ -91,19 +90,19 @@ class RoadTest {
 
     @Test
     void GetVehiclesOnRoad() throws VehicleFull, HumanExisting {
-        PoliceCars policeCar = new PoliceCars("Ford", "1234",
+        PoliceCar policeCar = new PoliceCar("Ford", "1234",
                 2, 60, "Department", "patrol");
-        Buses bus = new Buses("MAN", "AB4674DB", 10,
+        Bus bus = new Bus("MAN", "AB4674DB", 10,
                 "Siti", 40);
-        Policemen policeman1 = new Policemen("name1", "surname1", "middleName1", 40,
+        Policeman policeman1 = new Policeman("name1", "surname1", "middleName1", 40,
                 "Department1", "major1", 15481);
-        Policemen policeman2 = new Policemen("name2", "surname2", "middleName2", 40,
+        Policeman policeman2 = new Policeman("name2", "surname2", "middleName2", 40,
                 "Department2", "major2", 15482);
-        policeCar.NewPassenger(policeman1);
-        policeCar.NewPassenger(policeman2);
+        policeCar.addPassenger(policeman1);
+        policeCar.addPassenger(policeman2);
         for (int a = 0; a < 10; a++) {
-            Humans human = new Humans("name" + a, "surname" + a, "middleName" + a, 18 + a);
-            bus.NewPassenger(human);
+            Human human = new Human("name" + a, "surname" + a, "middleName" + a, 18 + a);
+            bus.addPassenger(human);
         }
         Road road = new Road();
         road.AddVehicleOnRoad(policeCar);

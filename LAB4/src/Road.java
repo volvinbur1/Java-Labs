@@ -1,14 +1,13 @@
-import vehicle.Cars;
-import vehicle.Vehicles;
+import vehicle.Vehicle;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Road <T extends Vehicles> {
+public class Road <T extends Vehicle> {
     public List<T> VehicleOnRoad = new ArrayList<>();
 
     public int GetAmountOnRoadHuman() {
-        int humanAmount = VehicleOnRoad.stream().mapToInt(Vehicles::getSeatingOccupied).sum();
+        int humanAmount = VehicleOnRoad.stream().mapToInt(Vehicle::getSeatingOccupied).sum();
         return humanAmount;
     }
 

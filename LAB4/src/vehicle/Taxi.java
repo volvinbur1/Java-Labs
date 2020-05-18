@@ -1,6 +1,6 @@
 package vehicle;
 
-public class Taxi extends Cars {
+public class Taxi extends Car {
     private int tariff;
     private String brandName;
 

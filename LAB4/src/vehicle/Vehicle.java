@@ -2,13 +2,13 @@ package vehicle;
 
 import exceptions.HumanExisting;
 import exceptions.VehicleFull;
-import humans.Humans;
+import humans.Human;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Vehicles<T extends Humans> {
-    public Vehicles(String carBrand, String stateVehicleNumber, int seatingAvailable) {
+public class Vehicle<T extends Human> {
+    public Vehicle(String carBrand, String stateVehicleNumber, int seatingAvailable) {
         CarBrand = carBrand;
         StateVehicleNumber = stateVehicleNumber;
         SeatingAvailable = seatingAvailable;
@@ -29,7 +29,7 @@ public class Vehicles<T extends Humans> {
 
     protected List<T> passengerList = new ArrayList<>();
 
-    public void NewPassenger(T passenger) throws VehicleFull, HumanExisting {
+    public void addPassenger(T passenger) throws VehicleFull, HumanExisting {
         if (passenger == null)
             return;
         if (getSeatingAvailable() == getSeatingOccupied())
@@ -40,7 +40,7 @@ public class Vehicles<T extends Humans> {
         SeatingOccupied++;
     }
 
-    public void PassengerLeave(T passenger) throws HumanExisting {
+    public void dropPassenger(T passenger) throws HumanExisting {
         if (passenger == null)
             return;
         if (!passengerList.contains(passenger))
